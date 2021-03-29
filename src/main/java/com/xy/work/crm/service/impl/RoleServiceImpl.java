@@ -46,4 +46,12 @@ public class RoleServiceImpl  extends BaseService<Role,Integer> implements RoleS
     public void updateRole(Role role) {
 
     }
+
+    @Override
+    public void saveRole(Role role) {
+        /**
+         * 1.参数校验
+         *
+         */
+    }
 }
