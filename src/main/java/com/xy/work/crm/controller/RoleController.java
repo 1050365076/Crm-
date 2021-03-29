@@ -1,0 +1,26 @@
+package com.xy.work.crm.controller;
+
+
+import com.xy.work.base.BaseController;
+import com.xy.work.crm.service.impl.RoleServiceImpl;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("role")
+public class RoleController extends BaseController {
+    @Resource
+    private RoleServiceImpl  roleService;
+
+    @RequestMapping("queryAllRoles")
+    @ResponseBody
+    public List<Map<String,Object>> queryAllRoles(){
+        return roleService.queryAllRoles();
+    }
+
+}
