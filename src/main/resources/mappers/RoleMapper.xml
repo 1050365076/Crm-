@@ -14,17 +14,27 @@
   </sql>
 
   <select id="queryAllRoles" resultType="java.util.Map">
-    select id,role_name as roleName
-    from t_role
-    where is_valid = 1
+       SELECT
+	   r1.id,
+	   r1.role_name as roleName,
+	   CASE WHEN IFNULL( temp.role_id, 0 ) = 0
+	   THEN "" ELSE "selected"
+	   END AS "selected"
+       FROM
+	   t_role r1
+	   LEFT JOIN ( SELECT role_id FROM t_user_role r2 WHERE r2.user_id = #{userId} ) temp ON r1.id = temp.role_id
+       WHERE
+	   r1.is_valid = 1
   </select>
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from t_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+
   <insert id="insert" parameterType="com.xy.work.crm.vo.Role" >
     insert into t_role (id, role_name, role_remark,
       create_date, update_date, is_valid
@@ -106,4 +116,6 @@
       is_valid = #{isValid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
 </mapper>

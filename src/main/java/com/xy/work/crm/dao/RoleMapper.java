@@ -20,5 +20,5 @@ public interface RoleMapper extends BaseMapper<Role,Integer> {
     int updateByPrimaryKey(Role record);
 
     //查询所有角色
-    List<Map<String,Object>> queryAllRoles();
+    List<Map<String,Object>> queryAllRoles(Integer userId);
 }

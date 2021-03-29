@@ -17,7 +17,7 @@ public class RoleServiceImpl  extends BaseService<Role,Integer> implements RoleS
     private RoleMapper roleMapper;
 
     @Override
-    public List<Map<String, Object>> queryAllRoles() {
-        return roleMapper.queryAllRoles();
+    public List<Map<String, Object>> queryAllRoles(Integer userId) {
+        return roleMapper.queryAllRoles(userId);
     }
 }

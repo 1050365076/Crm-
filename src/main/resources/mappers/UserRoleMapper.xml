@@ -18,6 +18,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="countUserRoleByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select  count(1) from t_user_role where user_id = #{userId}
+  </select>
+
+  <delete id="deleteUserRoleByUserId" parameterType="java.lang.Integer">
+    delete from t_user_role where user_id = #{userId}
+  </delete>
 
   <insert id="insert" parameterType="com.xy.work.crm.vo.UserRole" >
     insert into t_user_role (id, user_id, role_id,
@@ -80,7 +87,6 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <insert id="insertBatch" parameterType="list">
     insert into t_user_role(user_id,role_id,create_date,update_date) values
     <foreach collection="list" item="item" separator=",">
@@ -88,4 +94,7 @@
     </foreach>
 
   </insert>
+
+
+
 </mapper>

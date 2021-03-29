@@ -103,7 +103,16 @@ public class UserServiceImpl extends BaseService<User,Integer> implements UserSe
      * @param roleIds
      */
     private void relationUserRoles(Integer userId, String roleIds) {
-            if(StringUtils.isNotBlank(roleIds)){
+
+        /**
+         *  适用添加，适用修改
+         * **推荐方案** 首先将用户角色记录删除(存在的情况) 然后加入修改后的用户角色（选择角色记录）
+         */
+        int total = userRoleMapper.countUserRoleByUserId(userId);
+        if(total>0){
+           AssertUtil.isTrue(userRoleMapper.deleteUserRoleByUserId(userId) != total,"用户角色记录关联失败！ ");
+        }
+        if(StringUtils.isNotBlank(roleIds)){
                 List<UserRole> userRoles = new ArrayList<UserRole>();
                 for (String s : roleIds.split(",")){
                     UserRole userRole = new UserRole();
@@ -138,15 +147,26 @@ public class UserServiceImpl extends BaseService<User,Integer> implements UserSe
         AssertUtil.isTrue(temp == null,"待更新用户记录不存在！");
         checkFormParams(user.getUserName(),user.getEmail(),user.getPhone());
         temp = userMapper.queryUserByName(user.getUserName());
-        AssertUtil.isTrue((null != temp)&&!temp.getId().equals(user.getId()),"该 用户已经存在!");
+        AssertUtil.isTrue((null != temp)&&!temp.getId().equals(user.getId()),"该用户已经存在!");
         user.setUpdateDate(new Date());
         AssertUtil.isTrue(updateByPrimaryKeySelective(user)<1,"用户记录修改失败！");
 
 
         /**
          *     用户角色管理（t_user_role） user_id role_id
-         *     获取添加用户Id
+         *     修改
+         *     用户修改
+         *     存在
+         *         81 （1,2）--->81 null
+         *         81 (1,2)--->81 1,2,3,4
+         *         81 (1,2)--->81 2
+         *     不存在
+         *     直接批量添加（选择角色记录）
+         * **推荐方案** 首先将用户角色记录删除(存在的情况) 然后加入修改后的用户角色（选择角色记录）
          */
+
+        relationUserRoles(user.getId(),user.getRoleIds());
+
 
     }
 

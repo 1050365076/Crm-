@@ -5,9 +5,11 @@ layui.use(['form', 'layer','formSelects'], function () {
     var  formSelects = layui.formSelects;
 
 
+    //获取userId,查询角色是否被选中
+    var userId = $("input[name ='id']").val();
     formSelects.config('selectId',{
         type:"post",
-        searchUrl:ctx+"/role/queryAllRoles",
+        searchUrl:ctx+"/role/queryAllRoles?userId="+userId,
         keyName: "roleName",
         keyVal: 'id'
     },true);

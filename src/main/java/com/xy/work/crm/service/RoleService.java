@@ -4,5 +4,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface RoleService {
-    public List<Map<String,Object>> queryAllRoles();
+    public List<Map<String,Object>> queryAllRoles(Integer userId);
 }

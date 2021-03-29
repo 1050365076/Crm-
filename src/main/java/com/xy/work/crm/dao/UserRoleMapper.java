@@ -15,4 +15,9 @@ public interface UserRoleMapper extends BaseMapper<UserRole,Integer> {
     Integer  updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    //根据用户Id,查询出用户角色记录
+     int countUserRoleByUserId(Integer userId);
+    //根据用户Id,删除用户记录
+     int deleteUserRoleByUserId(Integer userId);
 }
