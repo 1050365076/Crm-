@@ -2,6 +2,7 @@ package com.xy.work.crm.controller;
 
 
 import com.xy.work.base.BaseController;
+import com.xy.work.crm.query.RoleQuery;
 import com.xy.work.crm.service.impl.RoleServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,18 @@ public class RoleController extends BaseController {
     @ResponseBody
     public List<Map<String,Object>> queryAllRoles(Integer userId){
         return roleService.queryAllRoles(userId);
+    }
+
+
+    @RequestMapping("index")
+    public String index(){
+        return "role/role";
+    }
+
+    @RequestMapping("list")
+    @ResponseBody
+    public Map<String,Object> queryRolesByParams(RoleQuery roleQuery){
+        return roleService.queryRoleByParams(roleQuery);
     }
 
 }
