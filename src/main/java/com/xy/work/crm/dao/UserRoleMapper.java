@@ -20,4 +20,10 @@ public interface UserRoleMapper extends BaseMapper<UserRole,Integer> {
      int countUserRoleByUserId(Integer userId);
     //根据用户Id,删除用户记录
      int deleteUserRoleByUserId(Integer userId);
+
+    //根据角色Id,查询出用户角色记录
+     int countUserRoleByRoleId(Integer roleId);
+     //根据角色Id,删除用户记录
+     int deleteUserRoleByRoleId(Integer roleId);
+
 }

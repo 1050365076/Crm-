@@ -26,6 +26,15 @@
     delete from t_user_role where user_id = #{userId}
   </delete>
 
+
+  <select id="countUserRoleByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select  count(1) from t_user_role where role_id = #{roleId}
+  </select>
+
+  <delete id="deleteUserRoleByRoleId" parameterType="java.lang.Integer">
+    delete from t_user_role where role_id = #{roleId}
+  </delete>
+
   <insert id="insert" parameterType="com.xy.work.crm.vo.UserRole" >
     insert into t_user_role (id, user_id, role_id,
       create_date, update_date)

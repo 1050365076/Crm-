@@ -35,4 +35,52 @@ layui.use(['table','layer','form'],function() {
         })
     });
 
+    //头工具栏
+    table.on("toolbar(roles)",function (obj) {
+        switch (obj.event) {
+            case "add":
+                openAndOrUpdateRoleDialog();
+                break;
+            case "grant":
+                break;
+        }
+    })
+
+    function openAndOrUpdateRoleDialog(id){
+        var title = "角色管理-角色添加";
+        var url = ctx +"/role/addOrUpdateRolePage";
+        if(id){
+            title = "角色管理-角色修改";
+            url = url +"?id="+id;
+        }
+        layui.layer.open({
+            title:title,
+            type:2,
+            area:["700px","500px"],
+            maxmin:true,
+            content:url
+        })
+    }
+
+    //行监听
+    table.on("tool(roles)",function (obj) {
+        var layEvent = obj.event;
+        if(layEvent === 'edit'){
+            openAndOrUpdateRoleDialog(obj.data.id);
+        }else if(layEvent === 'del'){
+            layer.confirm("确定删除当前记录?",{icon:3,title:"角色管理"},function (index) {
+                $.post(ctx+"/role/delete",{id:obj.data.id},function (data) {
+                        if(data.code == 200){
+                            layer.msg("删除成功");
+                            tabIns.reload();
+                        }else{
+                            layer.msg(result.msg);
+                        }
+                })
+            })
+        }
+    })
+
+
+
 });
