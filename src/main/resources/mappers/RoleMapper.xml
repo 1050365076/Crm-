@@ -44,6 +44,13 @@
     </where>
   </select>
 
+  <select id="queryRoleByRoleName" parameterType="string" resultType="com.xy.work.crm.vo.Role">
+        select <include refid="Base_Column_List"/>
+        from t_role
+        where is_valid = 1 and role_name = #{roleName}
+  </select>
+
+
   <insert id="insert" parameterType="com.xy.work.crm.vo.Role" >
     insert into t_role (id, role_name, role_remark,
       create_date, update_date, is_valid
