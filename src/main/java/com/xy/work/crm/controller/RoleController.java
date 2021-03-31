@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.jws.WebParam;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +68,17 @@ public class RoleController extends BaseController {
         return success("角色记录删除成功！");
     }
 
+    @RequestMapping("toAddGrantPage")
+    public String toAddGrantPage(Integer roleId, Model model){
+        model.addAttribute("roleId",roleId);
+        return "role/grant";
+    }
+
+    @RequestMapping("addGrant")
+    @ResponseBody
+    public ResultInfo addGrant(Integer roleId,Integer [] mids){
+        roleService.addGrant(mids,roleId);
+        return success("角色授权成功！");
+    }
 
 }

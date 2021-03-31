@@ -11,7 +11,6 @@
 <body>
 <#-- 角色ID -->
 <input type="hidden" name="roleId" value="${roleId!}"/>
-
 <div id="test1" class="ztree"></div>
 
 <script type="text/javascript" src="${ctx}/js/role/grant.js"></script>

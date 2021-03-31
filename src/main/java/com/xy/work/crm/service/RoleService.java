@@ -16,4 +16,6 @@ public interface RoleService {
     void updateRole(Role role);
 
     void saveRole(Role role);
+
+    void addGrant(Integer[] mids,Integer roleId);
 }
