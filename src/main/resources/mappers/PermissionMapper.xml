@@ -21,6 +21,13 @@
     delete from t_permission where role_id = #{roleId}
   </delete>
 
+  <select id="queryUserHasRoleIdsHasModuleIds" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select distinct  p.acl_value
+      from t_user_role ur left join t_permission p
+      on  ur.role_id=p.role_id
+      where user_id = #{userId}
+  </select>
+
    <insert id="insertBatch" parameterType="list">
     insert into t_permission(role_id,module_id,acl_value,create_date,update_date) values
     <foreach collection="list" item="item" separator=",">

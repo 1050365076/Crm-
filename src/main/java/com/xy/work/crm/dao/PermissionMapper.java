@@ -13,4 +13,7 @@ public interface PermissionMapper extends BaseMapper<Permission,Integer> {
     int deletePermissionByRoleId(Integer roleId);
 
     List<Integer> queryRoleHasAllMids(Integer roleId);
+
+    //根据userId,查询角色，然后再查询所拥有的菜单
+    List<String> queryUserHasRoleIdsHasModuleIds(Integer userId);
 }

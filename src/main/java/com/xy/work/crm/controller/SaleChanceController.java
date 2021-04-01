@@ -3,6 +3,7 @@ package com.xy.work.crm.controller;
 
 import com.xy.work.base.BaseController;
 import com.xy.work.base.ResultInfo;
+import com.xy.work.crm.annotaion.RequirePermission;
 import com.xy.work.crm.query.SaleChanceQuery;
 import com.xy.work.crm.service.impl.SaleChanceServiceImpl;
 import com.xy.work.crm.service.impl.UserServiceImpl;
@@ -34,12 +35,14 @@ public class SaleChanceController extends BaseController {
      * 营销登录管理界面
      */
     @RequestMapping("index")
+    @RequirePermission(code = "1010") //通过注解的方式拦截访问资源菜单
     public String index(){
         return "saleChance/sale_chance";
     }
 
     @GetMapping("list")
     @ResponseBody
+    @RequirePermission(code = "101001")
     public Map<String,Object> querySaleChanceByParams(Integer flag,SaleChanceQuery query,HttpServletRequest request){
         if(flag !=null && flag == 1){
             //分配给指导用户的数据
@@ -50,6 +53,7 @@ public class SaleChanceController extends BaseController {
 
     @RequestMapping("save")
     @ResponseBody
+    @RequirePermission(code = "101002")
     public ResultInfo saleSaleChance(HttpServletRequest request,SaleChance saleChance){
         saleChance.setCreateMan(userService.selectByPrimaryKey(LoginUserUtil.releaseUserIdFromCookie(request)).getTrueName());
         saleChanceServiceImpl.saveSaleChannce(saleChance);
@@ -68,6 +72,7 @@ public class SaleChanceController extends BaseController {
 
     @RequestMapping("update")
     @ResponseBody
+    @RequirePermission(code = "101004")
     public ResultInfo updateSaleChance(SaleChance saleChance){
         saleChanceServiceImpl.updateSaleChance(saleChance);
         return  success("机会数据更新成功");
@@ -77,6 +82,7 @@ public class SaleChanceController extends BaseController {
 
     @RequestMapping("delete")
     @ResponseBody
+    @RequirePermission(code = "101003")
     public ResultInfo deleteSaleChance(Integer[] ids){
         saleChanceServiceImpl.deleteSaleChance(ids);
         return  success("机会数据更新成功");
