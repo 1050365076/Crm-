@@ -2,6 +2,7 @@ package com.xy.work.crm;
 
 import com.alibaba.fastjson.JSON;
 import com.xy.work.base.ResultInfo;
+import com.xy.work.crm.exceptions.AuthException;
 import com.xy.work.crm.exceptions.NoLoginException;
 import com.xy.work.crm.exceptions.ParamsException;
 import org.springframework.stereotype.Component;
@@ -67,6 +68,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     ParamsException paramsException = (ParamsException) e;
                     mv.addObject("msg", paramsException.getMsg());
                     mv.addObject("code", paramsException.getCode());
+                } else if(e instanceof AuthException){
+                    AuthException authException = (AuthException) e;
+                    mv.addObject("msg", authException.getMsg());
+                    mv.addObject("code", authException.getCode());
                 }
                 return mv;
             } else {
@@ -77,14 +82,18 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                 resultInfo.setCode(300);
                 resultInfo.setMsg("系统错误请稍后再试....");
                 /**
-                 * 判断异常是否是参数异常
+                 * 判断异常是否是参数异常,json
                  */
                 if (e instanceof ParamsException) {
                     ParamsException p = (ParamsException) e;
                     resultInfo.setMsg(p.getMsg());
                     resultInfo.setCode(p.getCode());
+                }else if(e instanceof AuthException) {
+                    AuthException authException = (AuthException) e;
+                    resultInfo.setMsg(authException.getMsg());
+                    resultInfo.setCode(authException.getCode());
                 }
-                /**
+                    /**
                  * 错误信息以JSON信息写到客户端
                  */
                 httpServletResponse.setContentType("application/json;charset=utf-8");

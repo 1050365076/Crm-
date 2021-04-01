@@ -1,13 +1,16 @@
 package com.xy.work.crm.controller;
 
 import com.xy.work.base.BaseController;
+import com.xy.work.crm.service.impl.PermissionServiceImpl;
 import com.xy.work.crm.service.impl.UserServiceImpl;
 import com.xy.work.crm.utils.LoginUserUtil;
+import com.xy.work.crm.vo.Permission;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 系统初始控制器
@@ -19,6 +22,8 @@ public class IndexController extends BaseController {
     @Resource
     private UserServiceImpl userService;
 
+    @Resource
+    private PermissionServiceImpl permissionService;
     /**
      * 系统登录界面
      * @return
@@ -45,6 +50,11 @@ public class IndexController extends BaseController {
     public String main(HttpServletRequest request){
         Integer userId = LoginUserUtil.releaseUserIdFromCookie(request);
         request.setAttribute("user",userService.selectByPrimaryKey(userId));
+        /**
+         * 用户登录，通过获得userId查询菜单
+         **/
+        List<String> permissions =  permissionService.queryUserHasRoleIdsHasModuleIds(userId);
+        request.getSession().setAttribute("permissions",permissions);
         return "main";
     }
 
