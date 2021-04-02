@@ -22,7 +22,7 @@ public class WebLogAcpet {
         /**
          * 定义切点，切入aop下面的的所有函数
          */
-        @Pointcut("execution(public * com.xy.work.crm.aop..*.*(..))") //execution 匹配连接点
+        @Pointcut("execution(public * com.xy.work.crm.aop.AopController.*(..))") //execution 匹配连接点
         public void webLog(){}
 
         /**
@@ -56,18 +56,5 @@ public class WebLogAcpet {
         public void after(){
                 System.out.println("Aop After Advice 目标方法完成后增强");
         }
-
-        @Around("webLog()")
-        public void around(ProceedingJoinPoint pjp){
-                System.out.println("Aop around before...环绕通知");
-                try {
-                        pjp.proceed();
-                }catch (Throwable e){
-                        e.printStackTrace();
-                }
-                System.out.println("AOP Aronud after...环绕通知");
-        }
-
-
 
 }

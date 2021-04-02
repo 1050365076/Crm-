@@ -1,6 +1,7 @@
 package com.xy.work.crm.service;
 
 
+import com.xy.work.base.BaseService;
 import com.xy.work.crm.model.UserModel;
 import com.xy.work.crm.query.UserQuery;
 import com.xy.work.crm.vo.CusDevPlan;
@@ -9,7 +10,7 @@ import com.xy.work.crm.vo.User;
 import java.util.List;
 import java.util.Map;
 
-public interface UserService {
+public interface UserService   {
 
     public UserModel login(String userName, String userPwd);
 
@@ -23,4 +24,5 @@ public interface UserService {
     public void updateUser(User user);
 
     public void deleteUser(Integer [] ids);
+
 }
