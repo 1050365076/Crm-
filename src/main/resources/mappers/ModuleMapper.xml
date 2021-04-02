@@ -25,6 +25,39 @@
     where is_valid = 1
   </select>
 
+  <select id="queryModuls" resultType="com.xy.work.crm.vo.Module">
+        select <include refid="Base_Column_List"/>
+        from t_module
+        where is_valid = 1
+  </select>
+
+  <select id="queryModuleByGradeAndModuleName" resultType="com.xy.work.crm.vo.Module">
+    select <include refid="Base_Column_List"/>
+    from t_module
+    where is_valid = 1
+    and grade = #{grade}
+    and module_name = #{moduleName}
+  </select>
+
+  <select id="queryModuleByGradeAndUrl" resultType="com.xy.work.crm.vo.Module">
+    select <include refid="Base_Column_List"/>
+    from t_module
+    where is_valid = 1
+    and grade = #{grade}
+    and url = #{url}
+  </select>
+
+  <select id="queryModuleByOptValue" resultType="com.xy.work.crm.vo.Module" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"/>
+    from t_module
+    where is_valid = 1
+    and opt_value = #{optValue}
+
+
+  </select>
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />

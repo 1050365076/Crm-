@@ -5,6 +5,7 @@ import com.xy.work.base.ResultInfo;
 import com.xy.work.crm.exceptions.ParamsException;
 import com.xy.work.crm.model.UserModel;
 import com.xy.work.crm.query.UserQuery;
+import com.xy.work.crm.service.UserService;
 import com.xy.work.crm.service.impl.UserServiceImpl;
 import com.xy.work.crm.utils.LoginUserUtil;
 import com.xy.work.crm.vo.User;
@@ -69,6 +70,7 @@ public class UserController extends BaseController {
     public ResultInfo updatePassword(HttpServletRequest request,String oldPassword,String newPassword,String cofirmPassword){
         ResultInfo resultInfo = new ResultInfo();
         userService.updateUserPwd(LoginUserUtil.releaseUserIdFromCookie(request),oldPassword,newPassword,cofirmPassword);
+
         return resultInfo;
     };
 

@@ -2,6 +2,7 @@ package com.xy.work.crm.aop;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -10,6 +11,6 @@ public class AopController {
 
     @RequestMapping("/sayHello")
     public String sayHello(String name){
-        return "hello"+name;
+        return "hello你好啊";
     }
 }
