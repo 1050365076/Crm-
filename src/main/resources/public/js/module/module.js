@@ -43,16 +43,22 @@ layui.use(["table","treetable"],function () {
     })
 
     table.on("toolbar(munu-table)",function (obj) {
-
         switch (obj.event) {
             case "add":
                 openAddModuleDialog(0,-1);
+                break;
+            case "expand":
+                  treeTable.expandAll("#munu-table");
+                break;
+            case "fold":
+                treeTable.foldAll("#munu-table");
                 break;
         }
     })
 
     table.on("tool(munu-table)",function (obj) {
         var layEvent = obj.event;
+
         if(layEvent === "add"){
             if(obj.data.grade == 2){
                 layer.msg("暂不支持四级菜单添加操作");
@@ -60,10 +66,23 @@ layui.use(["table","treetable"],function () {
             }
             openAddModuleDialog(obj.data.grade+1,obj.data.id);
 
+        }else if(layEvent === 'edit'){
+            openUpdateModuleDialog(obj.data.id);
+        }else if(layEvent === "del"){
+            layer.confirm("确认删除当前记录?",{icon: 3, title:"菜单管理"},function(index){
+                $.post(ctx+"/module/delete",{mid:obj.data.id},function (data) {
+                    if( data.code == 200){
+                        layer.msg("操作成功！");
+                        treeTable.reload();
+                    }else{
+                        layer.msg(data.msg,{icon:5});
+                    }
+                })
+            });
         }
     })
 
-
+    //添加菜单
     function openAddModuleDialog(grade,parentId) {
         layui.layer.open({
             title:"菜单管理-菜单添加",
@@ -71,6 +90,18 @@ layui.use(["table","treetable"],function () {
             area:["700px","500px"],
             maxmin:true,
             content:ctx+"/module/addModulePage?grade="+grade+"&parentId="+parentId
+        })
+    }
+
+    //更新菜单
+    function openUpdateModuleDialog(id) {
+        layui.layer.open({
+            title:"菜单管理-菜单更新",
+            type:2,
+            area:["700px","500px"],
+            maxmin:true,
+            content:ctx+"/module/updateModulePage?id="+id
+
         })
     }
 

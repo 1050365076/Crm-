@@ -8,9 +8,9 @@ import com.xy.work.crm.service.ModuleService;
 import com.xy.work.crm.utils.AssertUtil;
 import com.xy.work.crm.vo.Module;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Date;
 import java.util.HashMap;
@@ -99,6 +99,81 @@ public class ModuleServiceImpl extends BaseService<Module,Integer> implements Mo
         module.setCreateDate(new Date());
         module.setUpdateDate(new Date());
         AssertUtil.isTrue(insertSelective(module)<1,"菜单添加失败！");
+    }
+
+
+
+    @Override
+    public void updateModule(Module module) {
+        /**
+         * 1.参数校验
+         *       id 记录必须存在
+         *      菜单名
+         *      非空 同一层级 菜单名唯一
+         *      url
+         *      二级菜单时 非空 不可重复
+         *      上级菜单parentId
+         *          二级/三级菜单 parentId(非空) 上级菜单必须存在
+         *      菜单层级 grade
+         *          非空 0|1|2
+         *      权限码optValue
+         *          非空 不可以重复
+         *  2.参数默认值
+         *  3.执行添加
+         */
+        Module m = selectByPrimaryKey(module.getId());
+        AssertUtil.isTrue( null == m ,"待修改的菜单记录不存！");
+
+
+        AssertUtil.isTrue(StringUtils.isBlank(module.getModuleName()),"请输入菜单名！");
+        Integer grade = module.getGrade();
+        //同一层级下，菜单名不能为空,不能重复
+        AssertUtil.isTrue(null == grade || !(grade == 0|| grade ==1 || grade == 2),"菜单层级非法！");
+        m  = moduleMapper.queryModuleByGradeAndModuleName(grade,module.getModuleName());
+        AssertUtil.isTrue(null != m && !(m.getId().equals(module.getId())),"该层级下菜单名已经存在！");
+
+        if(grade == 1){
+            AssertUtil.isTrue(StringUtils.isBlank(module.getUrl()),"请输入二级菜单地址Url");
+            m = moduleMapper.queryModuleByGradeAndUrl(grade,module.getUrl());
+            AssertUtil.isTrue(m != null && !(m.getId().equals(module.getId())),"二级菜单下的Url不可重复！");
+        }
+
+        if(grade != 0){
+            AssertUtil.isTrue( null == module.getParentId() || null == selectByPrimaryKey(module.getParentId()),"请指定上级菜单！");
+        }
+
+        //权限码
+        AssertUtil.isTrue(StringUtils.isBlank(module.getOptValue()),"请输入菜单权限码！");
+        m = moduleMapper.queryModuleByOptValue(module.getOptValue());
+        AssertUtil.isTrue(null != m && !(m.getId().equals(module.getId())),"权限码重复！");
+        module.setUpdateDate(new Date());
+
+        AssertUtil.isTrue(updateByPrimaryKeySelective(module)<1,"菜单修改失败！");
+    }
+
+    @Override
+    public void deleteModule(Integer mid) {
+        /**
+         * 1.记录必须存在
+         *    id非空  记录存在
+         * 2.是否存在子菜单
+         * 3.如果删除的菜单存在于权限表中，则级联删除
+         *
+         */
+        Module temp = selectByPrimaryKey(mid);
+        AssertUtil.isTrue(temp == null,"待删除的记录不存在！");
+        //统计是否存在子菜单
+        Integer total = moduleMapper.countSubModuleByParentId(mid);
+        AssertUtil.isTrue(total > 0 , "存在子菜单,暂不支持删除操作！");
+
+        //先删除子表，统计权限表中的记录
+        total = permissionMapper.countPermissionByModuleId(mid);
+        if(total >0){
+            AssertUtil.isTrue(permissionMapper.deletePermissionByModuleId(mid) != total,"菜单记录删除失败！");
+        }
+        temp.setIsValid((byte)0);
+
+        AssertUtil.isTrue(updateByPrimaryKeySelective(temp)<1,"菜单记录删除失败！");
     }
 
 }

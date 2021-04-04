@@ -54,4 +54,27 @@ public class ModuleController extends BaseController {
         return "module/add";
     }
 
+    @RequestMapping("update")
+    @ResponseBody
+    public ResultInfo updateModule(Module module){
+        moduleService.updateModule(module);
+        return success("菜单更新成功！");
+    }
+
+    @RequestMapping("updateModulePage")
+    public String updateModulePage(Integer id,Model model){
+        model.addAttribute("module",moduleService.selectByPrimaryKey(id));
+        return "module/update";
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public ResultInfo deleteModule(Integer mid){
+        moduleService.deleteModule(mid);
+        return success("菜单记录删除成功！");
+    }
+
+
+
+
 }

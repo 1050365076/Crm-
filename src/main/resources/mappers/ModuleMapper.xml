@@ -52,8 +52,12 @@
     from t_module
     where is_valid = 1
     and opt_value = #{optValue}
+  </select>
 
-
+  <select id="countSubModuleByParentId" resultType="Integer" parameterType="Integer">
+        select count(1) from t_module
+        where is_valid = 1
+        and parent_id = #{parentId}
   </select>
 
 
