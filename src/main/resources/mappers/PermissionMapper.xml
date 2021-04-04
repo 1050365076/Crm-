@@ -17,8 +17,17 @@
     select count(1) from t_permission where role_id = #{roleId}
   </select>
 
+  <select id="countPermissionByModuleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) from t_permission where module_id = #{mid}
+  </select>
+
+
   <delete id="deletePermissionByRoleId" parameterType="java.lang.Integer">
     delete from t_permission where role_id = #{roleId}
+  </delete>
+
+  <delete id="deletePermissionByModuleId" parameterType="java.lang.Integer">
+    delete from t_permission where module_id = #{mid}
   </delete>
 
   <select id="queryUserHasRoleIdsHasModuleIds" parameterType="java.lang.Integer" resultType="java.lang.String">

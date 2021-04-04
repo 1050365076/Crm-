@@ -18,4 +18,6 @@ public interface ModuleMapper extends BaseMapper<Module,Integer> {
     Module queryModuleByGradeAndUrl(@Param("grade")Integer grade,@Param("url") String url);
 
     Module queryModuleByOptValue(String optValue);
+
+    Integer countSubModuleByParentId(Integer parentId);
 }
