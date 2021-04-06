@@ -63,7 +63,7 @@
 
 
 
-        <table tableName="t_permission" domainObjectName="Permission"
+        <table tableName="t_customer" domainObjectName="Customer"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

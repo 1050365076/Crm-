@@ -29,8 +29,7 @@
         <div class="layui-col-xs6">
             <label class="layui-form-label">区域</label>
             <div class="layui-input-block">
-                <input type="text" class="layui-input"
-                       name="area"    value="${(customer.area)!}" placeholder="请输入区域">
+                <input type="text" class="layui-input" name="area"    value="${(customer.area)!}" placeholder="请输入区域">
             </div>
         </div>
         <div class="layui-col-xs6">
@@ -47,11 +46,12 @@
             <label class="layui-form-label">客户级别</label>
             <div class="layui-input-block">
                 <select name="level"  id="level">
-                    <option value="" >请选择</option>
-                    <option value="普通客户">普通客户</option>
+                    <option value="">请选择</option>
+                    <option value="普通客户" >普通客户</option>
                     <option value="重点开发客户" >重点开发客户</option>
-                    <option value="大客户" >大客户</option>
-                    <option value="合作伙伴" >合作伙伴</option>
+                    <option value="大客户">大客户</option>
+                    <option value="合作伙伴">合作伙伴 </option>
+
                 </select>
             </div>
         </div>

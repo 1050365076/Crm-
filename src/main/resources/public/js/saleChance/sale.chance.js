@@ -39,7 +39,7 @@ layui.use(['table','layer'],function(){
                 templet:function(d){
                     return formatterDevResult(d.devResult);
                 }},
-            {field: 'right',title:'操作',align:"center",minWidth:150,templet:'#saleChanceListBar'}
+            {fixed: 'right',title:'操作',align:"center",minWidth:150,templet:'#saleChanceListBar'}
         ]]
 
     });
