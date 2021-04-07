@@ -3,6 +3,7 @@ package com.xy.work.crm.controller;
 import com.xy.work.base.BaseController;
 import com.xy.work.base.ResultInfo;
 import com.xy.work.crm.query.CustomerQuery;
+import com.xy.work.crm.service.CustomerOrderService;
 import com.xy.work.crm.service.CustomerService;
 import com.xy.work.crm.vo.Customer;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class CustomerController extends BaseController {
 
     @Resource
     private CustomerService customerService;
+
+    @Resource
+    private CustomerOrderService customerOrderService;
 
     @RequestMapping("index")
     public String index(){
@@ -56,5 +60,17 @@ public class CustomerController extends BaseController {
     public ResultInfo deleteCustomer(Integer id){
         customerService.deleteCustomer(id);
         return success("客户记录删除成功!") ;
+    }
+
+    @RequestMapping("orderInfoPage")
+    public String orderInfoPage(Integer cid,Model model){
+        model.addAttribute("customer",customerService.selectByPrimaryKey(cid));
+        return  "customer/customer_order";
+    }
+
+    @RequestMapping("orderDetailPage")
+    public String orderDetailPage(Integer orderId,Model model){
+        model.addAttribute("order",customerOrderService.queryCustomerOrderByOrderId(orderId));
+        return "customer/customer_order_detail";
     }
 }

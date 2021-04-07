@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xy.work.base.BaseService;
 import com.xy.work.crm.dao.CustomerMapper;
+import com.xy.work.crm.dao.CustomerOrderMapper;
 import com.xy.work.crm.query.CustomerQuery;
 import com.xy.work.crm.service.CustomerService;
 import com.xy.work.crm.utils.AssertUtil;
 import com.xy.work.crm.utils.PhoneUtil;
 import com.xy.work.crm.vo.Customer;
+import com.xy.work.crm.vo.CustomerOrder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class CustomerServiceImpl extends BaseService<Customer,Integer> implement
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private CustomerOrderMapper customerOrderMapper;
 
     @Override
     public Map<String, Object> queryCustomerByParams(CustomerQuery customerQuery) {
@@ -107,4 +112,8 @@ public class CustomerServiceImpl extends BaseService<Customer,Integer> implement
         AssertUtil.isTrue(updateByPrimaryKeySelective(customer)<1,"删除客户记录失败！");
 
     }
+
+
+
+
 }

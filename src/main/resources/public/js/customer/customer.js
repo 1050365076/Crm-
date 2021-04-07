@@ -60,10 +60,38 @@ layui.use(['table','layer'],function(){
            })
     })
 
+    function openOrderInfoDialog(data) {
+        if(data.length == 0){
+            layer.msg("请选择待查看订单对应客户！",{icon:5});
+            return;
+        }
+        if(data.length >1){
+            layer.msg("暂不支持批量查看！",{icon:5});
+            return;
+        }
+        var url = ctx+"/customer/orderInfoPage?cid="+data[0].id;
+        layui.layer.open({
+            title:"客户管理-订单信息查看",
+            type:2,
+            area:["700px","500px"],
+            maxmin:true,
+            content:url
+        })
+
+    }
+
     table.on("toolbar(customers)",function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case "add":
                     openAddOrUpdateCustomerDialog();
+                    break;
+                case "link":
+                    break;
+                case "recode":
+                    break;
+                case "order":
+                    openOrderInfoDialog(checkStatus.data);
                     break;
 
             }
