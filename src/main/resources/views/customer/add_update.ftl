@@ -46,12 +46,12 @@
             <label class="layui-form-label">客户级别</label>
             <div class="layui-input-block">
                 <select name="level"  id="level">
-                    <option value="">请选择</option>
-                    <option value="普通客户" >普通客户</option>
-                    <option value="重点开发客户" >重点开发客户</option>
-                    <option value="大客户">大客户</option>
-                    <option value="合作伙伴">合作伙伴 </option>
-
+                    <option value="" <#if customer.level?string="">selected</#if>>请选择</option>
+                    <option value="普通客户" <#if customer.level?string="普通客户">selected</#if> >普通客户</option>
+                    <option value="重点开发客户" <#if customer.level?string="重点开发客户">selected</#if>>重点开发客户</option>
+                    <option value="大客户" <#if customer.level?string="大客户">selected</#if>>大客户</option>
+                    <option value="合作伙伴" <#if customer.level?string="合作伙伴">selected</#if>>合作伙伴 </option>
+                    <option value="战略合作伙伴" <#if customer.level?string="战略合作伙伴">selected</#if>>战略合作伙伴</option>
                 </select>
             </div>
         </div>
