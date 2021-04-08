@@ -16,6 +16,7 @@ public interface CustomerService extends BaseMapper<Customer,Integer>  {
 
     void deleteCustomer(Integer id);
 
+    void updateCustomerState();
 
 
 }

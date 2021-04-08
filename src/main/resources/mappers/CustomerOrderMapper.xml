@@ -43,6 +43,13 @@
         where is_valid = 1
         and cus_id = #{cusId}
   </select>
+
+  <select id="queryLastCustomerOrderByCusId" parameterType="java.lang.Integer" resultType="com.xy.work.crm.vo.CustomerOrder">
+    select <include refid="Base_Column_List"/>
+    from t_customer_order
+    where cus_id = #{cusId} ORDER by order_date desc limit 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_customer_order
     where id = #{id,jdbcType=INTEGER}

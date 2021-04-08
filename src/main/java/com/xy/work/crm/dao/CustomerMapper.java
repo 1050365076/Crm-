@@ -4,6 +4,8 @@ import com.xy.work.base.BaseMapper;
 import com.xy.work.crm.vo.Customer;
 import com.xy.work.crm.vo.Module;
 
+import java.util.List;
+
 public interface CustomerMapper extends BaseMapper<Customer,Integer> {
     Integer deleteByPrimaryKey(Integer id);
 
@@ -19,5 +21,11 @@ public interface CustomerMapper extends BaseMapper<Customer,Integer> {
 
 
     Customer queryCustomerByCusName (String cusName);
+
+
+    List<Customer> queryLossCustomer();
+
+    int updateCustomerStateByIds(List<Integer> lossCusIds);
+
 
 }
