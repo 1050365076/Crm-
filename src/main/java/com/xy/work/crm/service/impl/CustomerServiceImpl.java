@@ -3,6 +3,7 @@ package com.xy.work.crm.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xy.work.base.BaseService;
+import com.xy.work.crm.dao.CustomerLossMapper;
 import com.xy.work.crm.dao.CustomerMapper;
 import com.xy.work.crm.dao.CustomerOrderMapper;
 import com.xy.work.crm.query.CustomerQuery;
@@ -10,21 +11,23 @@ import com.xy.work.crm.service.CustomerService;
 import com.xy.work.crm.utils.AssertUtil;
 import com.xy.work.crm.utils.PhoneUtil;
 import com.xy.work.crm.vo.Customer;
+import com.xy.work.crm.vo.CustomerLoss;
 import com.xy.work.crm.vo.CustomerOrder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CustomerServiceImpl extends BaseService<Customer,Integer> implements CustomerService {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private CustomerLossMapper customerLossMapper;
 
     @Autowired
     private CustomerOrderMapper customerOrderMapper;
@@ -113,7 +116,47 @@ public class CustomerServiceImpl extends BaseService<Customer,Integer> implement
 
     }
 
+    @Override
+    public void updateCustomerState() {
+        /**
+         * 流失客户的转移
+         *
+         * 1.查询流失的客户数据
+         * 2.批量添加进入客户流失表
+         * 3.批量更新客户流失状态
+         * 4.通过定时任务 定时流转客户数据到客户流失表中
+         *
+         */
+        List<Customer> customers = customerMapper.queryLossCustomer();
+        if(null != customers && customers.size()>0){
+            List<CustomerLoss> customerLossList = new ArrayList<CustomerLoss>();
+            List<Integer> lossCusIds = new ArrayList<Integer>();
+            customers.forEach(c->{
+                CustomerLoss customerLoss = new CustomerLoss();
+                //流失状态暂缓 0 1-确流失无价值
+                customerLoss.setState(0);
+                customerLoss.setCreateDate(new Date());
+                customerLoss.setCusManager(c.getCusManager());
+                customerLoss.setCusName(c.getName());
+                customerLoss.setCusNo(c.getKhno());
+                customerLoss.setIsValid(1);
+                customerLoss.setUpdateDate(new Date());
+                //查询客户最后一次下单时间
+                CustomerOrder customerOrder = customerOrderMapper.queryLastCustomerOrderByCusId(c.getId());
+                if(null != customerOrder){
+                    customerLoss.setLastOrderTime(customerOrder.getOrderDate());
+                }
+                customerLossList.add(customerLoss);
+                lossCusIds.add(c.getId());
+            });
 
+            AssertUtil.isTrue(customerLossMapper.insertBatch(customerLossList)!=customerLossList.size(),"客户流转数据失败！");
+            AssertUtil.isTrue(customerMapper.updateCustomerStateByIds(lossCusIds)!= lossCusIds.size(),"客户数据流转失败！");
+        }
+
+
+
+    }
 
 
 }

@@ -19,4 +19,6 @@ public interface CustomerOrderMapper extends BaseMapper<CustomerOrder,Integer> {
     int updateByPrimaryKey(CustomerOrder record);
 
     Map<String,Object> queryCustomerOrderByOrderId (Integer orderId);
+
+    CustomerOrder queryLastCustomerOrderByCusId(Integer cusId);
 }
