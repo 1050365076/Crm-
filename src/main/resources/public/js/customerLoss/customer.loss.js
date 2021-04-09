@@ -56,8 +56,7 @@ layui.use(['table','layer'],function(){
             type:2,
             area:["700px","500px"],
             maxmin:true,
-            content:ctx+"/customer_loss/toCustomerReprPage?cusId="+id
-
+            content:ctx+"/customer_loss/toCustomerRepPage?cusId="+id
         })
     }
 

@@ -16,6 +16,8 @@ public interface CustomerReprieveMapper extends BaseMapper<CustomerReprieve,Inte
 
     int updateByPrimaryKey(CustomerReprieve record);
 
-    
+
+
+
 
 }

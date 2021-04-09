@@ -24,29 +24,29 @@ layui.use(['table','layer'],function(){
     })
 
     //设计行监听，客户机会计划项
-    table.on('tool(cusDevPlans)',function (obj) {
+    table.on('tool(customerReps)',function (obj) {
         var layEvent = obj.event;
         if(layEvent === 'edit'){
-            openAddOrUpdateCusDevPlanDialog(obj.data.id);
-        }else if(layEvent ==='del'){
-            layer.confirm("确定删除当前记录吗？",{icon:3,title:"客户开发机会管理"},function (index) {
-                $.post(ctx+"/cus_dev_plan/delete",{ids:obj.data.id},function (data) {
-                    if(data.code == 200){
-                        layer.msg("操作成功！");
-                        tableIns.reload();
-                    }else{
-                        layer.msg(data.msg,{icon:5});
-                    }
+            openAddOrUpdateCustomerRepDialog(obj.data.id);
+        }else if(layEvent ==='del') {
+                layer.confirm("确认删除当前记录?",{icon: 3, title:"暂缓数据管理"},function(index){
+                    $.post(ctx+"/customer_reprieve/delete",{id:obj.data.id},function (data) {
+                        if( data.code == 200){
+                            layer.msg("操作成功！");
+                            tableIns.reload();
+                        }else{
+                            layer.msg(data.msg,{icon:5});
+                        }
+                    })
                 });
-            })
         }
     })
 
-    function openAddOrUpdateCusDevPlanDialog(id) {
-        var title = "计划项管理-添加计划项";
-        var url = ctx+"/cus_dev_plan/addOrUpdateCusDevPlanPage?sid="+$("input[name='id']").val();
-        if(id != null && id !=""){
-            title = "计划项管理-更新计划项";
+    function openAddOrUpdateCustomerRepDialog(id) {
+        var title = "暂缓管理-添加暂缓";
+        var url = ctx+"/customer_loss/toAddOrUpdateCustomerReprPage?lossId="+$("input[name='id']").val();
+        if(id){
+            title ="暂缓管理-更新暂缓";
             url +="&id="+id;
         }
         layui.layer.open({
@@ -58,28 +58,40 @@ layui.use(['table','layer'],function(){
         })
     }
     //设置头工具栏监听
-    table.on('toolbar(cusDevPlans)',function (data) {
-        if(data.event == 'add'){  //添加计划
-            openAddOrUpdateCusDevPlanDialog();
-        }else if(data.event =='success'){ //开发成功
-            updateSaleChanceDevResult(2);
-        }else if (data.event =='failed'){ //开发失败
-            updateSaleChanceDevResult(3);
+    table.on('toolbar(customerReps)',function (data) {
+        if(data.event == 'add'){  //添加暂缓
+            openAddOrUpdateCustomerRepDialog();
+        }else if(data.event =='confirm'){ //确认流失
+            updateCustomerLossState();
         }
     });
-    function  updateSaleChanceDevResult(data){
-        layer.confirm('您确认执行该操作吗',{icon:3,title:"营销机会管理"},function (index) {
-            var sId = $("[name=id]").val();
-            $.post(ctx+"/sale_chance/updateCusDevPlanDevResult",{id:sId,devResult: data},function (result) {
-                if( result.code == 200){
-                    layer.msg("更新成功！");
-                    layer.closeAll("iframe");
-                    parent.location.reload();
-                }else {
-                    layer.msg(result.msg, {icon: 5});
-                }
-            });
-        })
+    function updateCustomerLossState() {
+          layer.confirm("当前客户确认流失？",{icon: 3, title:"暂缓数据管理"},function(index){
+          layer.close(index);
+          layer.prompt({title:"请输入流失原因",formType:2},function (text,index) {
+                layer.close(index)
+                $.ajax({
+                    type:"post",
+                    url:ctx+"/customer_loss/updateCustomerLossStateById",
+                    data:{
+                        id:$("input[name= 'id']").val(),
+                        lossReason:text
+                    },
+                    dataType:"json",
+                    success:function (res) {
+                        if(res.code == 200){
+                            layer.msg(res.msg);
+                            layer.closeAll("iframe");
+                            //刷新页面
+                            parent.location.reload();
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    }
+                })
+          })
+        });
+
     }
 
 

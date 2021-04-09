@@ -9,4 +9,6 @@ import java.util.Map;
 public interface CustomerLossService extends BaseMapper<CustomerLoss,Integer> {
 
     Map<String,Object> queryByParams(CustomerLossQuery customerLossQuery);
+
+    void  updateCustomerLossStateById(Integer id,String  lossReason);
 }
