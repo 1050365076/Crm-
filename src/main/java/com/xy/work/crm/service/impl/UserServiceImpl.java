@@ -47,6 +47,11 @@ public class UserServiceImpl extends BaseService<User,Integer> implements UserSe
         return userMapper.queryAllSale();
     }
 
+    @Override
+    public List<Map<String, Object>> queryAllCustomerManager() {
+        return userMapper.queryAllCustomerManager();
+    }
+
 
     @Override
     public Map<String, Object> queryUsersbyParams(UserQuery userQuery) {

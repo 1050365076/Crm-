@@ -14,8 +14,11 @@ public interface UserService   {
 
     public UserModel login(String userName, String userPwd);
 
-    //查询所以指派人。销售
+    //查询所有指派人。销售
     public List<Map<String,Object>> queryAllSale();
+
+    //查询所有分配人。客户经理
+    public List<Map<String,Object>> queryAllCustomerManager();
 
     public Map<String,Object> queryUsersbyParams(UserQuery userQuery);
 
