@@ -25,4 +25,7 @@ public interface UserMapper extends BaseMapper<User,Integer> {
 
     //查询所以指派人。销售
     public List<Map<String,Object>> queryAllSale();
+
+    //查询所以指派人。销售
+    public List<Map<String,Object>> queryAllCustomerManager();
 }

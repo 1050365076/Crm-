@@ -19,8 +19,8 @@
                     <select name="type"  id="type">
                         <option value="" >请选择</option>
                         <option value="6">咨询</option>
-                        <option value="7" >投诉</option>
-                        <option value="8" >建议</option>
+                        <option value="7" >建议</option>
+                        <option value="8" >投诉</option>
                     </select>
                 </div>
 

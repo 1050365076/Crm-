@@ -11,7 +11,7 @@
         <div class="layui-logo">
             <a href="">
                 <img src="images/logo.png" alt="logo">
-                <h1>CRm-智能办公</h1>
+                <h1>智能办公</h1>
             </a>
         </div>
         <a>

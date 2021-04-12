@@ -61,6 +61,16 @@
        and tr.role_name = '销售'
   </select>
 
+  <select id="queryAllCustomerManager" resultType="java.util.Map">
+      select u.id,u.user_name  as uname
+       from t_user u
+       left join t_user_role ur  on u.id = ur.user_id
+       left join t_role tr on ur.role_id = tr.id
+       WHERE u.is_valid =1
+       and tr.is_valid = 1
+       and tr.role_name = '客户经理'
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
