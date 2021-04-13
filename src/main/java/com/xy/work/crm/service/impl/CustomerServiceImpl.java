@@ -170,5 +170,48 @@ public class CustomerServiceImpl extends BaseService<Customer,Integer> implement
         return map;
     }
 
+    @Override
+    public Map<String, Object> countCustomerMake() {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> list = customerMapper.countCustomerMake();
+        List<String> data1 = new ArrayList<>();
+        List<Integer> data2 = new ArrayList<>();
+        /**
+         * result
+         *     data1:["大客户"，'合作伙伴']
+         *     data2:["10","20"]
+         */
+        list.forEach(m->{
+            data1.add(m.get("level").toString());
+            data2.add(Integer.parseInt(m.get("total").toString()));
+        });
+        result.put("data1",data1);
+        result.put("data2",data2);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> countCustomerMake02() {
+        Map<String,Object> result = new HashMap<>();
+        List<Map<String,Object>> list = customerMapper.countCustomerMake();
+        List<String> data1 = new ArrayList<>();
+        List<Map<String,Object>> data2= new ArrayList<>();
+        /**
+         * result
+         *     data1:["大客户"，'合作伙伴']
+         *     data2:["10","20"]
+         */
+        list.forEach(m->{
+            data1.add(m.get("level").toString());
+            Map<String,Object> tmp = new HashMap<>();
+            tmp.put("name",m.get("level"));
+            tmp.put("value",m.get("total"));
+            data2.add(tmp);
+        });
+        result.put("data1",data1);
+        result.put("data2",data2);
+        return result;
+    }
+
 
 }
