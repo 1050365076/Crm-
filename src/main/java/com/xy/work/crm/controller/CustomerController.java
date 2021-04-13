@@ -73,4 +73,13 @@ public class CustomerController extends BaseController {
         model.addAttribute("order",customerOrderService.queryCustomerOrderByOrderId(orderId));
         return "customer/customer_order_detail";
     }
+
+
+    @RequestMapping("queryCustomerContributionByParams")
+    @ResponseBody
+    public Map<String,Object> queryCustomerContributionByParams(CustomerQuery customerQuery){
+        return customerService.queryCustomerContributionByParams(customerQuery);
+    }
+
+
 }

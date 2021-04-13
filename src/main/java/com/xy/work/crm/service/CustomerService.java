@@ -4,6 +4,7 @@ import com.xy.work.base.BaseMapper;
 import com.xy.work.crm.query.CustomerQuery;
 import com.xy.work.crm.vo.Customer;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CustomerService extends BaseMapper<Customer,Integer>  {
@@ -18,5 +19,5 @@ public interface CustomerService extends BaseMapper<Customer,Integer>  {
 
     void updateCustomerState();
 
-
+    Map<String,Object> queryCustomerContributionByParams(CustomerQuery customerQuery);
 }
