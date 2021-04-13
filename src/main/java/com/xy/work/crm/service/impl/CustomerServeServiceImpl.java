@@ -17,9 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CustomerServeServiceImpl extends BaseService<CustomerServer,Integer> implements CustomerServeService {
@@ -100,5 +98,38 @@ public class CustomerServeServiceImpl extends BaseService<CustomerServer,Integer
         }
         customerServer.setUpdateDate(new Date());
         AssertUtil.isTrue(updateByPrimaryKeySelective(customerServer)<1,"服务记录更新失败！");
+    }
+
+    @Override
+    public Map<String, Object> countCustomerServe() {
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = customerServerMapper.countCustomerServe();
+        List<String> data1 = new ArrayList<>();
+        List<Integer> data2= new ArrayList<>();
+        list.forEach(m->{
+            data1.add(m.get("serveType").toString());
+            data2.add(Integer.valueOf(m.get("total").toString()));
+        });
+        map.put("data1",data1);
+        map.put("data2",data2);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> countCustomerServe02() {
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> list = customerServerMapper.countCustomerServe();
+        List<String> data1 = new ArrayList<>();
+        List<Map<String,Object>> data2 = new ArrayList<>();
+        list.forEach(m->{
+            Map<String,Object> tmp = new HashMap<>();
+            data1.add(m.get("serveType").toString());
+            tmp.put("name",m.get("serveType"));
+            tmp.put("value",m.get("total"));
+            data2.add(tmp);
+        });
+        map.put("data1",data1);
+        map.put("data2",data2);
+        return map;
     }
 }
