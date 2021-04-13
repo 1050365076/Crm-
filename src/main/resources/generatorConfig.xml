@@ -63,7 +63,7 @@
 
 
 
-        <table tableName="t_customer_serve" domainObjectName="CustomerServer"
+        <table tableName="t_datadic" domainObjectName="DataDic"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
