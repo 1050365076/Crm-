@@ -1,10 +1,12 @@
 package com.xy.work.crm.dao;
 
 import com.xy.work.base.BaseMapper;
+import com.xy.work.crm.query.CustomerQuery;
 import com.xy.work.crm.vo.Customer;
 import com.xy.work.crm.vo.Module;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerMapper extends BaseMapper<Customer,Integer> {
     Integer deleteByPrimaryKey(Integer id);
@@ -27,5 +29,6 @@ public interface CustomerMapper extends BaseMapper<Customer,Integer> {
 
     int updateCustomerStateByIds(List<Integer> lossCusIds);
 
+    public List<Map<String,Object>> queryCustomerContributionByParams(CustomerQuery customerQuery);
 
 }

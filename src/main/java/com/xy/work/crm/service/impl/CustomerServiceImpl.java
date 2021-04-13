@@ -158,5 +158,17 @@ public class CustomerServiceImpl extends BaseService<Customer,Integer> implement
 
     }
 
+    @Override
+    public Map<String, Object> queryCustomerContributionByParams(CustomerQuery customerQuery) {
+        Map<String,Object> map = new HashMap<>();
+        PageHelper.startPage(customerQuery.getPage(),customerQuery.getLimit());
+        PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(customerMapper.queryCustomerContributionByParams(customerQuery));
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",pageInfo.getTotal());
+        map.put("data",pageInfo.getList());
+        return map;
+    }
+
 
 }
