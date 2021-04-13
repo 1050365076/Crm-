@@ -25,4 +25,5 @@ public interface CustomerService extends BaseMapper<Customer,Integer>  {
 
     Map<String,Object> countCustomerMake02();
 
+
 }

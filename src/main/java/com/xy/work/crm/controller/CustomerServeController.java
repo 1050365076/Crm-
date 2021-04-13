@@ -96,6 +96,18 @@ public class CustomerServeController extends BaseController {
     }
 
 
+    @RequestMapping("countCustomerServe")
+    @ResponseBody
+    public Map<String,Object> countCustomerServe(){
+        return customerServeService.countCustomerServe();
+    }
+
+    @RequestMapping("countCustomerServe02")
+    @ResponseBody
+    public Map<String,Object> countCustomerServe02(){
+        return customerServeService.countCustomerServe02();
+    }
+
 
 
 }

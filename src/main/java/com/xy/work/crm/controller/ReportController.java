@@ -17,7 +17,9 @@ public class ReportController extends BaseController {
         }else if (flag == 1){
             //客户构成分析
             return "report/customer_make";
-        }else if (flag == 3){
+        }else if(flag == 2){
+            return "report/customer_serve";
+        } else if (flag == 3){
             return "report/customer_loss";
         }else {
             return "";

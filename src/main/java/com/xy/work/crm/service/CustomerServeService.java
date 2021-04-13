@@ -13,4 +13,8 @@ public interface CustomerServeService extends BaseMapper<CustomerServer,Integer>
 
     void updateCustomerServe(CustomerServer customerServer);
 
+    Map<String,Object> countCustomerServe();
+
+    Map<String,Object> countCustomerServe02();
+
 }
