@@ -119,6 +119,14 @@
     order  by  total desc
   </select>
 
+  <select id="countCustomerMake" resultType="java.util.Map">
+    select
+   `level`,
+    count(1) as total
+    from t_customer
+    where is_valid = 1 and state = 0
+    GROUP BY `level`
+  </select>
 
   <update id="updateCustomerStateByIds" parameterType="list">
     update t_customer set state = 1
@@ -416,4 +424,6 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
 </mapper>

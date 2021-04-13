@@ -20,4 +20,9 @@ public interface CustomerService extends BaseMapper<Customer,Integer>  {
     void updateCustomerState();
 
     Map<String,Object> queryCustomerContributionByParams(CustomerQuery customerQuery);
+
+    Map<String,Object> countCustomerMake();
+
+    Map<String,Object> countCustomerMake02();
+
 }
