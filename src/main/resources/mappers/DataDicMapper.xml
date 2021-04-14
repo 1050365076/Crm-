@@ -13,20 +13,41 @@
     id, data_dic_name, data_dic_value, is_valid, create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_datadic
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.xy.work.crm.query.DataDicQuery">
+    select <include refid="Base_Column_List"/>
+    from t_datadic
+    <where>
+      is_valid = 1
+      <if test="dataDicName !=null and dataDicName !=''">
+        and data_dic_name like concat("%",#{dataDicName},"%")
+      </if>
+    </where>
+    GROUP BY t_datadic.data_dic_name,data_dic_value
+  </select>
+
+  <select id="queryDataDicByDataDicName" parameterType="java.lang.String" resultType="com.xy.work.crm.vo.DataDic">
+    select <include refid="Base_Column_List"/>
+    from t_datadic
+    where is_valid = 1
+    and data_dic_name = #{dataDicName}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_datadic
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xy.work.crm.vo.DataDic" >
-    insert into t_datadic (id, data_dic_name, data_dic_value, 
+    insert into t_datadic (id, data_dic_name, data_dic_value,
       is_valid, create_date, update_date
       )
-    values (#{id,jdbcType=INTEGER}, #{dataDicName,jdbcType=VARCHAR}, #{dataDicValue,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{dataDicName,jdbcType=VARCHAR}, #{dataDicValue,jdbcType=VARCHAR},
       #{isValid,jdbcType=TINYINT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
       )
   </insert>
