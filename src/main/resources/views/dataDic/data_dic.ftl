@@ -10,13 +10,7 @@
                 <form class="layui-form">
                     <div class="layui-inline">
                         <div class="layui-input-inline">
-                            <input type="text" name="userName" class="layui-input searchVal" placeholder="用户名" />
-                        </div>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" class="layui-input searchVal" placeholder="邮箱" />
-                        </div>
-                        <div class="layui-input-inline">
-                            <input type="text" name="phone" class="layui-input searchVal" placeholder="手机号" />
+                            <input type="text" name="dataDicName" class="layui-input searchVal" placeholder="字典类型" />
                         </div>
                         <a class="layui-btn search_btn" data-type="reload">
                             <i class="layui-icon">&#xe615;</i>

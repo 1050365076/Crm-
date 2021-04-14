@@ -6,10 +6,9 @@ layui.use(['form', 'layer'], function () {
     form.on('submit(addOrUpdateCusDevPlan)',function (data) {
         var index = top.layer.msg("数据提交中,请稍后...",{icon:16,time:false,shade:0.8});
         var url = ctx+"/cus_dev_plan/save"
-        console.log(data.field);
         if($("input[name ='id']").val()){
             url  = ctx+"/cus_dev_plan/update"
-        }
+        };
         $.post(url,data.field,function (res) {
                 if(res.code == 200){
                     top.layer.msg("操作成功！");

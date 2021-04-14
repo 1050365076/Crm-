@@ -30,9 +30,7 @@ layui.use(['table','layer','form'],function() {
                 curr:1
             },
             where:{
-                // userName:$("input[name='userName']").val(),
-                // email:$("input[name='email']").val(),
-                // phone:$("input[name='phone']").val()
+                dataDicName:$("input[name='dataDicName']").val(),
             }
         })
     });
@@ -40,27 +38,28 @@ layui.use(['table','layer','form'],function() {
     /**
      * 头工具栏
      */
-    table.on('toolbar(users)',function (obj) {
-        switch (obj.event) {
-            case "add":
-                openAddOrUpdateUserDialog();
-                break;
-            case "del":
-                delUsers(table.checkStatus(obj.config.id).data);
-                break;
-
+    table.on("toolbar(dataDics)",function (obj) {
+        var layEvent = obj.event;
+        if(layEvent === "add"){
+            openAddOrUpdateDataDicPage();
         }
-    });
-
+    })
+    table.on("tool(dataDics)",function (obj) {
+        switch (obj.event) {
+            case "edit":
+                openAddOrUpdateDataDicPage(obj.data.id);
+                break;
+        }
+    })
     /**
      * 添加用户或者修改用户
      */
-    function openAddOrUpdateUserDialog(uid){
-        var title = "用户管理-用户添加"
-        var url = ctx+"/user/addOrUpdateUsersPage"
-        if(uid){
-            title = "用户管理-用户修改"
-            url = url+"?id="+uid;
+    function openAddOrUpdateDataDicPage(data) {
+        var title = "字典管理-字典添加";
+        var url = ctx+"/data_dic/openAddOrUpdateDataDicPage";
+        if(data){
+            title = "字典管理-字典修改";
+            url = url +"?id="+data;
         }
         layui.layer.open({
             title:title,
@@ -68,71 +67,12 @@ layui.use(['table','layer','form'],function() {
             area:["700px","500px"],
             maxmin:true,
             content:url
-        })
+        });
     }
 
     /**
      * 删除用户
      */
-    function delUsers(datas) {
-        /**
-         * 批量删除
-         */
-        if(datas.length == 0){
-            layer.msg("请选择要删除的记录行！")
-            return;
-        }
-        layer.confirm("确定删除选择的记录",{
-            btn:['确定','取消']
-        },function (index) {
-            layer.close(index);
-            var ids = "ids=";
-            for (var i =0;i<datas.length;i++){
-                if(i<datas.length-1){
-                    ids = ids + datas[i].id+"&ids="
-                }else {
-                    ids = ids + datas[i].id
-                }
-            }
-            $.ajax({
-                type:"post",
-                url:ctx+"/user/delete",
-                data:ids,
-                dataType:"json",
-                success:function (data) {
-                    if(data.code == 200){
-                        tabIns.reload();
-                    }else {
-                        layer.msg(data.msg);
-                    }
-                }
-            })
 
-        })
-
-    }
-
-
-
-
-
-    //行监听，打开编辑,删除操作
-    table.on('tool(users)',function(obj) {
-        var layEvent = obj.event;
-        if(layEvent === 'edit'){
-            openAddOrUpdateUserDialog(obj.data.id);
-        }else if(layEvent === "del"){
-            layer.confirm("确认删除当前记录?",{icon: 3, title:"用户管理"},function(index){
-                $.post(ctx+"/user/delete",{ids:obj.data.id},function (data) {
-                    if( data.code == 200){
-                        layer.msg("操作成功！");
-                        tabIns.reload();
-                    }else{
-                        layer.msg(data.msg,{icon:5});
-                    }
-                })
-            });
-        }
-    });
 
 });
