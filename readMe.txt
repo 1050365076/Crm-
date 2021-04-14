@@ -21,7 +21,18 @@ SpringMVC执行流程:
 6.ViewResolver：视图解析器。ViewResolver负责将处理结果生成View视图，ViewResolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。
 7View:是springmvc的封装对象，是一个接口, springmvc框架提供了很多的View视图类型，包括：jspview，pdfview,jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面。
 
-
+Servlet生命周期： 1.实例化（构造方法创建）
+                 2.初始化（执行init(ServletConfig servletConfig)方法）
+                   interface ServletConfig{
+                                   String getServletName();
+                                   ServletContext getServletContext();
+                                   String getInitParameter(String var1);
+                                   Enumeration<String> getInitParameterNames();
+                                  // Enumeration接口中定义了一些方法,通过这些方法可以枚举(一次获得一个)对象集合中的元素
+                    }
+                 3.服务（执行service（ServletRequest servletRequest, ServletResponse servletResponse）方法）
+                 4.摧毁（执行destory(）方法）
+                 //当停止tomcat时也就销毁的servlet。
 首页index.ftl:
 进入主界面：访问IndexController
 进行登录Login,以及记住密码：

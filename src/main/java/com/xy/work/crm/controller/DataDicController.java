@@ -57,6 +57,4 @@ public class DataDicController extends BaseController {
         dataDicService.deleteDataDic(id);
         return success("字典记录删除成功！");
     }
-
-
 }
